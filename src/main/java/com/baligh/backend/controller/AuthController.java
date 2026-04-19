@@ -1,0 +1,37 @@
+package com.baligh.backend.controller;
+
+import com.baligh.backend.dto.request.LoginRequest;
+import com.baligh.backend.dto.request.RegisterOrgFullRequest;
+import com.baligh.backend.dto.request.RegisterUserRequest;
+import com.baligh.backend.dto.response.LoginResponse;
+import com.baligh.backend.dto.response.RegisterOrgResponse;
+import com.baligh.backend.service.AuthService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
+    private final AuthService authService;
+
+    @PostMapping("/login")
+    public LoginResponse login(@Valid @RequestBody LoginRequest request) {
+        return authService.login(request.getPhone());
+    }
+
+    @PostMapping("/register/user")
+    @ResponseStatus(HttpStatus.CREATED)
+    public LoginResponse registerUser(@Valid @RequestBody RegisterUserRequest request) {
+        return authService.registerUser(request);
+    }
+
+    @PostMapping("/register/org")
+    @ResponseStatus(HttpStatus.CREATED)
+    public RegisterOrgResponse registerOrg(@Valid @RequestBody RegisterOrgFullRequest request) {
+        return authService.registerOrg(request);
+    }
+}
