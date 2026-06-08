@@ -2,6 +2,7 @@ package com.baligh.backend.model;
 
 import com.baligh.backend.model.enums.IssuePriority;
 import com.baligh.backend.model.enums.IssueStatus;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -50,11 +51,13 @@ public class Issue {
     private IssuePriority priority = IssuePriority.MEDIUM;
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     @Builder.Default
     private List<IssueAttachment> attachments = new ArrayList<>();
 
     @OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("createdAt ASC")
+    @JsonManagedReference
     @Builder.Default
     private List<IssueUpdate> updates = new ArrayList<>();
 

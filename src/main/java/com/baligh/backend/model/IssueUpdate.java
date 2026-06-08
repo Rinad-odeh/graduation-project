@@ -2,10 +2,12 @@ package com.baligh.backend.model;
 
 import com.baligh.backend.model.enums.IssueStatus;
 import com.baligh.backend.model.enums.UpdateAuthorType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,6 +21,7 @@ public class IssueUpdate {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "issue_id", nullable = false)
+    @JsonBackReference
     private Issue issue;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "issue_attachments")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
@@ -17,6 +19,7 @@ public class IssueAttachment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "issue_id", nullable = false)
+    @JsonBackReference
     private Issue issue;
 
     @Column(nullable = false)

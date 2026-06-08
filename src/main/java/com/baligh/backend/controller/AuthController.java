@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -18,9 +20,15 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @PostMapping("/request-otp")
+    public Map<String, String> requestOtp(@RequestBody Map<String, String> body) {
+        authService.sendOtp(body.get("phone"));
+        return Map.of("message", "OTP sent via WhatsApp");
+    }
+
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody LoginRequest request) {
-        return authService.login(request.getPhone());
+        return authService.login(request.getPhone(), request.getOtp());
     }
 
     @PostMapping("/register/user")

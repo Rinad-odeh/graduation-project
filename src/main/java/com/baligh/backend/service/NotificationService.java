@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.transaction.annotation.Propagation;
 
 import java.util.Map;
 
@@ -34,7 +35,7 @@ public class NotificationService {
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void send(User recipient, Issue issue, NotificationType type, String titleAr, String bodyAr) {
         if (recipient == null) {
             log.warn("Skipping notification: recipient is null (type={})", type);
