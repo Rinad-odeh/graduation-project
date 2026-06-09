@@ -14,15 +14,9 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    /**
-     * Auth is excluded from Phase 1.
-     * All API endpoints are permitted — replace this with JWT filter chain
-     * once authentication is implemented.
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // 1. إضافة إعدادات الـ CORS لحل مشكلة لوحة التحكم تماماً
             .cors(cors -> cors.configurationSource(request -> {
                 CorsConfiguration config = new CorsConfiguration();
                 config.setAllowedOrigins(List.of("https://baligh-admin-production.up.railway.app"));
@@ -31,14 +25,14 @@ public class SecurityConfig {
                 config.setAllowCredentials(true);
                 return config;
             }))
-            // 2. الحفاظ على الإعدادات السابقة الخاصة بكِ كما هي دون أي تغيير
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/h2-console/**").permitAll()
-                .anyRequest().permitAll()  // TODO: replace with role-based rules after auth integration
+                .requestMatchers("/api/v1/auth/admin/login").permitAll() // فتح مسار الأدمن الجديد
+                .anyRequest().permitAll()  
             )
-            .headers(headers -> headers.frameOptions(f -> f.sameOrigin())); // for H2 console
+            .headers(headers -> headers.frameOptions(f -> f.sameOrigin()));
 
         return http.build();
     }
