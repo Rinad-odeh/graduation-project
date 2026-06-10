@@ -9,7 +9,6 @@ import com.baligh.backend.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -43,19 +42,5 @@ public class AuthController {
     public RegisterOrgResponse registerOrg(@Valid @RequestBody RegisterOrgFullRequest request) {
         return authService.registerOrg(request);
     }
-@PostMapping("/login")
-public ResponseEntity<?> login(@RequestBody java.util.Map<String, String> request) {
-    String phone = request.get("phone");
-    String otp = request.get("otp");
-
-    if (otp == null || otp.trim().isEmpty()) {
-     
-        return ResponseEntity.ok().body("{\"message\": \"Admin Login successful\", \"phone\": \"" + phone + "\"}");
-    }
-
     
-
-    return ResponseEntity.ok().body("{\"message\": \"Mobile Login successful\"}");
-} 
 }
-
