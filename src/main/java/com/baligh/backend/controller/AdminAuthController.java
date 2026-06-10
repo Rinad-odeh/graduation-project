@@ -12,14 +12,14 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/admin-auth") // 💡 تم التعديل هنا إلى admin-auth لمنع تضارب السيرفر والكراش نهائياً مع كود الموبايل
+@RequestMapping("/api/v1/admin-auth") // 💡 غيّرنا هذا السطر إلى admin-auth لمنع كراش التضارب مع الموبايل نهائياً!
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*") 
 public class AdminAuthController {
 
     private final UserRepository userRepository;
 
-    @PostMapping("/login") // 💡 دالة الدخول الحصرية للأدمن بدون OTP
+    @PostMapping("/login") // 💡 مسار الدخول الفريد للأدمن بدون OTP
     public ResponseEntity<?> adminLogin(@RequestBody Map<String, String> request) {
         
         // جلب رقم الهاتف من السيرفر سواء أرسله الفرونتند بـ phoneNumber أو phone
