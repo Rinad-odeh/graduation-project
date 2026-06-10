@@ -43,11 +43,19 @@ public class AuthController {
     public RegisterOrgResponse registerOrg(@Valid @RequestBody RegisterOrgFullRequest request) {
         return authService.registerOrg(request);
     }
-  @PostMapping("/admin/login")
-public ResponseEntity<?> adminLogin(@RequestBody java.util.Map<String, String> request) {
+@PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody java.util.Map<String, String> request) {
     String phone = request.get("phone");
+    String otp = request.get("otp");
+
+    if (otp == null || otp.trim().isEmpty()) {
+     
+        return ResponseEntity.ok().body("{\"message\": \"Admin Login successful\", \"phone\": \"" + phone + "\"}");
+    }
+
     
-    // كود خاص بالويب فقط: يستقبل الهاتف ويرد بنجاح فوراً بدون ما يلمس كود الموبايل
-    return ResponseEntity.ok().body("{\"message\": \"Admin Login successful\", \"phone\": \"" + phone + "\"}");
-}  
+
+    return ResponseEntity.ok().body("{\"message\": \"Mobile Login successful\"}");
+} 
 }
+
