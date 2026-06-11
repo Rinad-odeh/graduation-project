@@ -1,4 +1,4 @@
-package com.baligh.backend.dto.response;
+﻿package com.baligh.backend.dto.response;
 
 import com.baligh.backend.model.User;
 import com.baligh.backend.model.enums.UserRole;
@@ -12,6 +12,7 @@ public class UserResponse {
     private String name;
     private String phone;
     private UserRole role;
+    private boolean active;
     private LocalDateTime createdAt;
 
     public static UserResponse from(User user) {
@@ -20,6 +21,7 @@ public class UserResponse {
         r.name = user.getName();
         r.phone = user.getPhone();
         r.role = user.getRole();
+        r.active = user.isActive();
         r.createdAt = user.getCreatedAt();
         return r;
     }
